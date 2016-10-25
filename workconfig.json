@@ -1,0 +1,44 @@
+{
+  "Schedule": {
+    "Employees": [
+      {
+        "name": "Dave",
+        "Projects": [
+          "project1",
+          "project2"
+        ]
+      },
+      {
+        "name": "Alex",
+        "Projects": [
+          "project1"
+        ]
+      },
+      {
+        "name": "Harambe",
+        "Projects": [
+          "project2"
+        ]
+      }
+    ]
+  },
+  "ProjectList": {
+    "Projects": [
+      {
+        "name": "project1",
+        "start": "08/4/2015",
+        "end": "09/14/2016"
+      },
+      {
+        "name": "project2",
+        "start": "04/06/2015",
+        "end": "12/04/2016"
+      },
+      {
+        "name": "project3",
+        "start": "08/06/2016",
+        "end": "03/04/2017"
+      }
+    ]
+  }
+}
