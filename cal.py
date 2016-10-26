@@ -73,7 +73,11 @@ def drawCalendar(color, month):
 			labelArr.append(lbl1)
 
 def clickEnter():
+	global labelArr
+	for i in labelArr:
+		i.configure(background="gainsboro")
 	selectProjects()
+	redrawCalLabels("red", None)
 
 def selectProjects():
 	global projectLabels
@@ -84,7 +88,7 @@ def selectProjects():
 	for i in data["Schedule"]["Employees"]:
 		if(i["name"] == name):
 			projects = i["Projects"]
-	dates = getStartDates(projects)
+	dates = getEndDates(projects)
 	y = .03
 	for pro in range(len(dates)):
 		y=y+.04
@@ -98,7 +102,7 @@ def removeLabels(array):
 		i.place_forget()
 
 
-def getStartDates(pros):
+def getEndDates(pros):
 	dates = []
 	for i in pros:
 		for p in data["ProjectList"]["Projects"]:
@@ -106,7 +110,6 @@ def getStartDates(pros):
 				end = p["end"].split("/")
 				dates.append(end)
 				end = formatDate(end)
-				redrawCalLabels("red", end)
 	return dates
 
 def formatDate(end):
@@ -117,25 +120,37 @@ def getNames():
 		names.append(i["name"])
 
 def clickMonth():
+	calendarLabelZero()
 	monthClicked = month.get()
 	monthNum = months.index(monthClicked)
 	global labelArr
 	labelArr = []
-	drawCalendar("gainsboro", monthNum)
-	redrawCalLabels("red", )
+	drawCalendar("gainsboro", monthNum+1)
+	if(var.get() == "Select One"):
+		return
+	redrawCalLabels("red", None)
 	
 
 def redrawCalLabels(color, end):
-	if(var.get() != "Select One"):
-		m = int(var.get())
+	if(month.get() != "Month"):
+		m = months.index(month.get())
+		m = m+1
 	else:
 		m = datetime.date.today().month
 	d = 1
 	for i in labelArr:
-		delta = datetime.date(2016, m, int(i.cget("text"))) - formatDate(getStartDates(projects[0])[0])
+		if(int(i.cget("text")) == 0):
+			continue
+		delta = datetime.date(2016, m, int(i.cget("text"))) - formatDate(getEndDates([projects[0]])[0])
 		if(delta.days <= 0):
 			i.configure(background=color)
 		d = d + 1
+
+def calendarLabelZero():
+	global labelArr
+	for i in labelArr:
+		i.configure(text=0)
+		i.configure(background="gainsboro")
 
 getNames()
 main()
